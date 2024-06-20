@@ -1,0 +1,12 @@
+Source: ros-jazzy-mapviz-plugins
+Section: misc
+Priority: optional
+Maintainer: Southwest Research Institute <swri-robotics@swri.org>
+Build-Depends: debhelper (>= 9.0.0), libqt5core5a, libqt5opengl5-dev, qt5-qmake, ros-jazzy-ament-cmake, ros-jazzy-ament-index-cpp, ros-jazzy-cv-bridge, ros-jazzy-gps-msgs, ros-jazzy-image-transport, ros-jazzy-map-msgs, ros-jazzy-mapviz, ros-jazzy-marti-common-msgs, ros-jazzy-marti-nav-msgs, ros-jazzy-marti-sensor-msgs, ros-jazzy-marti-visualization-msgs, ros-jazzy-nav-msgs, ros-jazzy-pluginlib, ros-jazzy-rclcpp, ros-jazzy-rclcpp-action, ros-jazzy-ros-environment, ros-jazzy-sensor-msgs, ros-jazzy-std-msgs, ros-jazzy-stereo-msgs, ros-jazzy-swri-image-util, ros-jazzy-swri-math-util, ros-jazzy-swri-route-util, ros-jazzy-swri-transform-util, ros-jazzy-tf2, ros-jazzy-visualization-msgs, ros-jazzy-ros-workspace
+Homepage: https://github.com/swri-robotics/mapviz
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-mapviz-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt5core5a, libqt5opengl5, ros-jazzy-ament-index-cpp, ros-jazzy-cv-bridge, ros-jazzy-gps-msgs, ros-jazzy-image-transport, ros-jazzy-map-msgs, ros-jazzy-mapviz, ros-jazzy-marti-common-msgs, ros-jazzy-marti-nav-msgs, ros-jazzy-marti-sensor-msgs, ros-jazzy-marti-visualization-msgs, ros-jazzy-nav-msgs, ros-jazzy-pluginlib, ros-jazzy-rclcpp, ros-jazzy-rclcpp-action, ros-jazzy-sensor-msgs, ros-jazzy-std-msgs, ros-jazzy-stereo-msgs, ros-jazzy-swri-image-util, ros-jazzy-swri-math-util, ros-jazzy-swri-route-util, ros-jazzy-swri-transform-util, ros-jazzy-tf2, ros-jazzy-visualization-msgs, ros-jazzy-ros-workspace
+Description: Common plugins for the Mapviz visualization tool
