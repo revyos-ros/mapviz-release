@@ -1,0 +1,12 @@
+Source: ros-humble-mapviz-plugins
+Section: misc
+Priority: optional
+Maintainer: Southwest Research Institute <swri-robotics@swri.org>
+Build-Depends: debhelper (>= 9.0.0), libqt5core5a, libqt5opengl5-dev, qt5-qmake, ros-humble-ament-cmake, ros-humble-ament-index-cpp, ros-humble-cv-bridge, ros-humble-gps-msgs, ros-humble-image-transport, ros-humble-map-msgs, ros-humble-mapviz, ros-humble-marti-common-msgs, ros-humble-marti-nav-msgs, ros-humble-marti-sensor-msgs, ros-humble-marti-visualization-msgs, ros-humble-nav-msgs, ros-humble-pluginlib, ros-humble-rclcpp, ros-humble-rclcpp-action, ros-humble-sensor-msgs, ros-humble-std-msgs, ros-humble-stereo-msgs, ros-humble-swri-image-util, ros-humble-swri-math-util, ros-humble-swri-route-util, ros-humble-swri-transform-util, ros-humble-tf2, ros-humble-visualization-msgs, ros-humble-ros-workspace
+Homepage: https://github.com/swri-robotics/mapviz
+Standards-Version: 3.9.2
+
+Package: ros-humble-mapviz-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt5core5a, libqt5opengl5, ros-humble-ament-index-cpp, ros-humble-cv-bridge, ros-humble-gps-msgs, ros-humble-image-transport, ros-humble-map-msgs, ros-humble-mapviz, ros-humble-marti-common-msgs, ros-humble-marti-nav-msgs, ros-humble-marti-sensor-msgs, ros-humble-marti-visualization-msgs, ros-humble-nav-msgs, ros-humble-pluginlib, ros-humble-rclcpp, ros-humble-rclcpp-action, ros-humble-sensor-msgs, ros-humble-std-msgs, ros-humble-stereo-msgs, ros-humble-swri-image-util, ros-humble-swri-math-util, ros-humble-swri-route-util, ros-humble-swri-transform-util, ros-humble-tf2, ros-humble-visualization-msgs, ros-humble-ros-workspace
+Description: Common plugins for the Mapviz visualization tool
