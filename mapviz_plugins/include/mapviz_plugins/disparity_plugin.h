@@ -40,7 +40,11 @@
 #include <QWidget>
 
 // ROS libraries
+#ifdef USE_CVBRIDGE_H_FILES
 #include <cv_bridge/cv_bridge.h>
+#else
+#include <cv_bridge/cv_bridge.hpp>
+#endif
 #include <opencv2/highgui.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <stereo_msgs/msg/disparity_image.hpp>
@@ -107,10 +111,12 @@ protected Q_SLOTS:
   void SetSubscription(bool visible);
 
 private:
+  void connectCallback(const std::string& topic, const rmw_qos_profile_t& qos);
   Ui::disparity_config ui_;
   QWidget* config_widget_;
 
   std::string topic_;
+  rmw_qos_profile_t qos_;
   Anchor anchor_;
   Units units_;
   double offset_x_;
