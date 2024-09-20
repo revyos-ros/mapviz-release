@@ -2,6 +2,26 @@
 Changelog for package multires_image
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.3 (2024-09-18)
+------------------
+
+2.4.2 (2024-08-12)
+------------------
+
+2.4.1 (2024-08-09)
+------------------
+
+2.4.0 (2024-08-09)
+------------------
+
+2.3.0 (2023-08-24)
+------------------
+
+2.2.2 (2023-06-07)
+------------------
+* Iron Compatibility (`#779 <https://github.com/swri-robotics/mapviz/issues/779>`_)
+* Contributors: David Anthony
+
 2.2.1 (2023-05-30)
 ------------------
 * Updating maintainers list (`#778 <https://github.com/swri-robotics/mapviz/issues/778>`_)
