@@ -1,4 +1,4 @@
-release_repo_url: git@github.com:revyos-ros/mapviz-release
+release_repo_url: git@github.com:revyos-ros/mapviz-release.git
 tracks:
   dashing:
     actions:
