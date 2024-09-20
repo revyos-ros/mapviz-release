@@ -1,3 +1,31 @@
+## mapviz (humble) - 2.4.3-1
+
+The packages in the `mapviz` repository were released into the `humble` distro by running `/home/z572/gits/revyos-ros/venv/bin/bloom-release -r humble mapviz --override-release-repository-push-url git@github.com:revyos-ros/mapviz-release.git` on `Fri, 20 Sep 2024 05:25:02 -0000`
+
+These packages were released:
+- `mapviz`
+- `mapviz_interfaces`
+- `mapviz_plugins`
+- `multires_image`
+- `tile_map`
+
+Version of package(s) in repository `mapviz`:
+
+- upstream repository: https://github.com/swri-robotics/mapviz.git
+- release repository: https://github.com/revyos-ros/mapviz-release.git
+- rosdistro version: `2.4.3-1`
+- old version: `2.2.1-1`
+- new version: `2.4.3-1`
+
+Versions of tools used:
+
+- bloom version: `0.12.0`
+- catkin_pkg version: `1.0.0`
+- rosdep version: `0.22.2`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## mapviz (jazzy) - 2.3.0-5
 
 The packages in the `mapviz` repository were released into the `jazzy` distro by running `/home/z572/gits/revyos-ros/venv/bin/bloom-release -r jazzy mapviz --override-release-repository-push-url git@github.com:revyos-ros/mapviz-release` on `Thu, 27 Jun 2024 12:31:08 -0000`
