@@ -73,18 +73,13 @@ geometry_msgs::msg::PointStamped make_point_stamped(double x, double y, double z
 
 /**
  * Convenience method for converting a tf2::Stamped<tf2::Transform> object into
- * the equivalent ROS message.  This has to be done differently between ROS Dashing
- * and Eloquent, so this wraps it up conveniently.
+ * the equivalent ROS message.
  * @param transform The source object
  * @return That tf as a ROS message
  */
 auto tf2_to_msg(const tf2::Stamped<tf2::Transform>& transform)
 {
-#if USE_NEW_TF2_TOMSG == 1
   return tf2::toMsg(transform);
-#else
-  return tf2::toMsg<tf2::Stamped<tf2::Transform>, geometry_msgs::msg::TransformStamped>(transform);
-#endif
 }
 
 MapCanvas::MapCanvas(QWidget* parent) :
@@ -252,8 +247,7 @@ void MapCanvas::paintEvent(QPaintEvent* event)
   QPainter p(this);
   p.setRenderHints(QPainter::Antialiasing |
                    QPainter::TextAntialiasing |
-                   QPainter::SmoothPixmapTransform |
-                   QPainter::HighQualityAntialiasing,
+                   QPainter::SmoothPixmapTransform,
                    enable_antialiasing_);
   p.beginNativePainting();
   // .beginNativePainting() disables blending and clears a handful of other
@@ -330,7 +324,7 @@ void MapCanvas::popGlMatrices()
 
 void MapCanvas::wheelEvent(QWheelEvent* e)
 {
-  float numDegrees = e->delta() / -8;
+  float numDegrees = e->angleDelta().y() / -8;
 
   Zoom(numDegrees / 10.0);
 }
@@ -514,8 +508,7 @@ void MapCanvas::TransformTarget(QPainter* painter)
     auto tfrm = tf_buf_->lookupTransform(
       fixed_frame_,
       target_frame_,
-      tf2::TimePointZero,
-      std::chrono::seconds(1));
+      tf2::TimePointZero);
 
     tf2::fromMsg(tfrm, transform_);
 

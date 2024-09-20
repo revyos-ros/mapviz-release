@@ -28,6 +28,7 @@
 // *****************************************************************************
 
 #include <mapviz_plugins/disparity_plugin.h>
+#include <mapviz_plugins/topic_select.h>
 
 // QT libraries
 #include <QDialog>
@@ -38,9 +39,12 @@
 #include <sensor_msgs/image_encodings.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#ifdef USE_CVBRIDGE_H_FILES
 #include <cv_bridge/cv_bridge.h>
+#else
+#include <cv_bridge/cv_bridge.hpp>
+#endif
 
-#include <mapviz/select_topic_dialog.h>
 
 // Declare plugin
 #include <pluginlib/class_list_macros.hpp>
@@ -55,26 +59,28 @@ PLUGINLIB_EXPORT_CLASS(mapviz_plugins::DisparityPlugin, mapviz::MapvizPlugin)
 
 namespace mapviz_plugins
 {
-  DisparityPlugin::DisparityPlugin()
-  : MapvizPlugin()
-  , ui_()
-  , config_widget_(new QWidget())
-  , anchor_(TOP_LEFT)
-  , units_(PIXELS)
-  , offset_x_(0)
-  , offset_y_(0)
-  , width_(320)
-  , height_(240)
-  , has_image_(false)
-  , last_width_(0)
-  , last_height_(0)
-  , has_message_(false)
+  DisparityPlugin::DisparityPlugin() :
+    MapvizPlugin(),
+    ui_(),
+    config_widget_(new QWidget()),
+    anchor_(TOP_LEFT),
+    units_(PIXELS),
+    offset_x_(0),
+    offset_y_(0),
+    width_(320),
+    height_(240),
+    has_image_(false),
+    last_width_(0),
+    last_height_(0),
+    has_message_(false),
+    topic_(""),
+    qos_(rmw_qos_profile_default)
   {
     ui_.setupUi(config_widget_);
 
     // Set background white
     QPalette p(config_widget_->palette());
-    p.setColor(QPalette::Background, Qt::white);
+    p.setColor(QPalette::Window, Qt::white);
     config_widget_->setPalette(p);
 
     // Set status text red
@@ -157,7 +163,7 @@ namespace mapviz_plugins
     } else {
       disparity_sub_ = node_->create_subscription<stereo_msgs::msg::DisparityImage>(
         topic_,
-        rclcpp::QoS(1),
+        rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos_)),
         std::bind(&DisparityPlugin::disparityCallback, this, std::placeholders::_1)
       );
 
@@ -166,21 +172,26 @@ namespace mapviz_plugins
   }
   void DisparityPlugin::SelectTopic()
   {
-    std::string topic = mapviz::SelectTopicDialog::selectTopic(
+    auto [topic, qos] = SelectTopicDialog::selectTopic(
       node_,
-      "stereo_msgs/msg/DisparityImage"
-    );
+      "stereo_msgs/msg/DisparityImage",
+      qos_);
 
     if (!topic.empty())
     {
-      ui_.topic->setText(QString::fromStdString(topic));
-      TopicEdited();
+      connectCallback(topic, qos);
     }
   }
 
   void DisparityPlugin::TopicEdited()
   {
     std::string topic = ui_.topic->text().trimmed().toStdString();
+    connectCallback(topic, qos_);
+  }
+
+  void DisparityPlugin::connectCallback(const std::string& topic, const rmw_qos_profile_t& qos)
+  {
+    ui_.topic->setText(QString::fromStdString(topic));
     if (!this->Visible())
     {
       PrintWarning("Topic is Hidden");
@@ -189,16 +200,18 @@ namespace mapviz_plugins
       if (!topic.empty())
       {
         topic_ = topic;
+        qos_ = qos;
       }
       disparity_sub_.reset();
       return;
     }
-    if (topic != topic_)
+    if ((topic != topic_) || qosEqual(qos, qos_))
     {
       PrintWarning("Topic is Hidden");
       initialized_ = false;
       has_message_ = false;
       topic_ = topic;
+      qos_ = qos;
       PrintWarning("No messages received.");
 
       disparity_sub_.reset();
@@ -207,7 +220,7 @@ namespace mapviz_plugins
       {
         disparity_sub_ = node_->create_subscription<stereo_msgs::msg::DisparityImage>(
           topic_,
-          rclcpp::QoS(1),
+          rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos),
           std::bind(&DisparityPlugin::disparityCallback, this, std::placeholders::_1)
         );
 
@@ -460,6 +473,8 @@ namespace mapviz_plugins
       height_ = node["height"].as<double>();
       ui_.height->setValue(static_cast<int>(height_));
     }
+
+    LoadQosConfig(node, qos_);
   }
 
   void DisparityPlugin::SaveConfig(YAML::Emitter& emitter, const std::string& path)
@@ -471,6 +486,7 @@ namespace mapviz_plugins
     emitter << YAML::Key << "offset_y" << YAML::Value << offset_y_;
     emitter << YAML::Key << "width" << YAML::Value << width_;
     emitter << YAML::Key << "height" << YAML::Value << height_;
+    SaveQosConfig(emitter, qos_);
   }
 
   std::string DisparityPlugin::AnchorToString(Anchor anchor)
