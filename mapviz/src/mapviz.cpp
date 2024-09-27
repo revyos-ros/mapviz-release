@@ -231,6 +231,14 @@ Mapviz::Mapviz(bool is_standalone, int argc, char** argv, QWidget *parent, Qt::W
 
   ui_.bg_color->setColor(background_);
   canvas_->SetBackground(background_);
+
+  // Keyboard shortcuts for the main window
+  QShortcut * remove_display_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_X), this);
+  connect(remove_display_shortcut, SIGNAL(activated()), this, SLOT(RemoveDisplay()));
+  QShortcut * rename_display_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_R), this);
+  connect(rename_display_shortcut, SIGNAL(activated()), this, SLOT(RenameDisplay()));
+  QShortcut * add_display_shortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this);
+  connect(add_display_shortcut, SIGNAL(activated()), this, SLOT(SelectNewDisplay()));
 }
 
 Mapviz::~Mapviz()
@@ -284,9 +292,17 @@ void Mapviz::Initialize()
 
     connect(group, SIGNAL(triggered(QAction*)), this, SLOT(SetImageTransport(QAction*)));
 
+    rclcpp::QoS dynamic_tf_qos(100);
+    dynamic_tf_qos.best_effort();
+    dynamic_tf_qos.durability_volatile();
     tf_buf_ = std::make_shared<tf2_ros::Buffer>(node_->get_clock());
     tf_buf_->setUsingDedicatedThread(true);
-    tf_ = std::make_shared<tf2_ros::TransformListener>(*tf_buf_, node_, false);
+    tf_ = std::make_shared<tf2_ros::TransformListener>(
+      *tf_buf_,
+      node_,
+      false,
+      dynamic_tf_qos);
+    
     tf_manager_ = std::make_shared<swri_transform_util::TransformManager>(node_);
     try
     {
@@ -1040,14 +1056,16 @@ void Mapviz::Hover(double x, double y, double scale)
     xy_pos_label_->update();
 
     swri_transform_util::Transform transform;
+    std::string fixed_frame = ui_.fixedframe->currentText().toStdString();
     if
     (
+      fixed_frame.length() > 0 &&
       tf_manager_->SupportsTransform(
         swri_transform_util::_wgs84_frame,
-        ui_.fixedframe->currentText().toStdString()) &&
+        fixed_frame) &&
       tf_manager_->GetTransform(
         swri_transform_util::_wgs84_frame,
-        ui_.fixedframe->currentText().toStdString(),
+        fixed_frame,
         transform))
     {
       tf2::Vector3 point(x, y, 0);
@@ -1436,6 +1454,20 @@ void Mapviz::RemoveDisplay(QListWidgetItem* item)
     plugins_.erase(item);
 
     delete item;
+  }
+}
+
+void Mapviz::RenameDisplay()
+{
+  QListWidgetItem* item = ui_.configs->currentItem();
+  RenameDisplay(item);
+}
+
+void Mapviz::RenameDisplay(QListWidgetItem* item)
+{
+  if (item) {
+    ConfigItem* config_item = static_cast<ConfigItem*>(ui_.configs->itemWidget(item));
+    config_item->EditName();
   }
 }
 
