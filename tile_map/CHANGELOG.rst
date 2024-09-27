@@ -2,6 +2,21 @@
 Changelog for package tile_map
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.3 (2024-09-18)
+------------------
+
+2.4.2 (2024-08-12)
+------------------
+
+2.4.1 (2024-08-09)
+------------------
+
+2.4.0 (2024-08-09)
+------------------
+* Fix unitialized bing source (`#800 <https://github.com/swri-robotics/mapviz/issues/800>`_)
+  Co-authored-by: Alex Youngs <alexyoungs@hatchbed.com>
+* Contributors: agyoungs
+
 2.3.0 (2023-08-24)
 ------------------
 

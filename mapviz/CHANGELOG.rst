@@ -2,6 +2,35 @@
 Changelog for package mapviz
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.3 (2024-09-18)
+------------------
+* update launch params (`#830 <https://github.com/swri-robotics/mapviz/issues/830>`_)
+* Contributors: DangitBen
+
+2.4.2 (2024-08-12)
+------------------
+* Plugin shortcuts (`#824 <https://github.com/swri-robotics/mapviz/issues/824>`_)
+  * Added hotkey for plugin remove (Ctrl + X)
+  * Added key shortcut for plugin rename (CTRL + R)
+  * Added Ctrl + N shortcut for adding new plugin.
+* Fixed qos_dpeth to qos_depth in MapvizPlugin::LoadQosConfig (`#823 <https://github.com/swri-robotics/mapviz/issues/823>`_)
+* Contributors: Robert Brothers
+
+2.4.1 (2024-08-09)
+------------------
+* Code cleanup (`#820 <https://github.com/swri-robotics/mapviz/issues/820>`_)
+  * Applying code changes that should have gone in previous release
+* Contributors: David Anthony
+
+2.4.0 (2024-08-09)
+------------------
+* Configurable qos (`#818 <https://github.com/swri-robotics/mapviz/issues/818>`_)
+  * Adding configurable QoS to UI
+  * Changing lookup duration to reduce lag
+  * Changing QoS settings on TF to reduce lag (`#815 <https://github.com/swri-robotics/mapviz/issues/815>`_)
+  * Do not attempt to transform point if a target frame is not specified (`#793 <https://github.com/swri-robotics/mapviz/issues/793>`_)
+* Contributors: David Anthony, Robert Brothers
+
 2.3.0 (2023-08-24)
 ------------------
 * Updates for rolling and removing EOL distro support (`#785 <https://github.com/swri-robotics/mapviz/issues/785>`_)
