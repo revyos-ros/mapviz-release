@@ -2,6 +2,34 @@
 Changelog for package mapviz_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.4.3 (2024-09-18)
+------------------
+* update plugin subscribers to use all of qos (`#827 <https://github.com/swri-robotics/mapviz/issues/827>`_)
+  Co-authored-by: Ben <benjamin.andrew@swri.org>
+  Co-authored-by: David Anthony <djanthony@gmail.com>
+* Added kludgy install for autogened TopicSelect header that is required if external plugin packages include topic_select.h (`#825 <https://github.com/swri-robotics/mapviz/issues/825>`_)
+* Contributors: DangitBen, Robert Brothers
+
+2.4.2 (2024-08-12)
+------------------
+
+2.4.1 (2024-08-09)
+------------------
+* Code cleanup (`#820 <https://github.com/swri-robotics/mapviz/issues/820>`_)
+  * Switching to plus sign for concatenation
+  * Applying code changes that should have gone in previous release
+* Contributors: David Anthony
+
+2.4.0 (2024-08-09)
+------------------
+* Configurable qos (`#818 <https://github.com/swri-robotics/mapviz/issues/818>`_)
+  * Adding configurable QoS to UI
+  * Changing lookup duration to reduce lag
+  ---------
+  Co-authored-by: Robert Brothers <33141599+rjb0026@users.noreply.github.com>
+* Improve Font Selection Error Handling (`#794 <https://github.com/swri-robotics/mapviz/issues/794>`_)
+* Contributors: David Anthony
+
 2.3.0 (2023-08-24)
 ------------------
 
