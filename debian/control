@@ -1,0 +1,12 @@
+Source: ros-humble-mapviz
+Section: misc
+Priority: optional
+Maintainer: Southwest Research Institute <swri-robotics@swri.org>
+Build-Depends: debhelper (>= 9.0.0), freeglut3-dev, libglew-dev, libqt5core5a, libqt5opengl5-dev, libxi-dev, libxmu-dev, libyaml-cpp-dev, pkg-config, qt5-qmake, ros-humble-ament-cmake, ros-humble-cv-bridge, ros-humble-geometry-msgs, ros-humble-image-transport, ros-humble-mapviz-interfaces, ros-humble-marti-common-msgs, ros-humble-pluginlib, ros-humble-rclcpp, ros-humble-ros-environment, ros-humble-rqt-gui, ros-humble-rqt-gui-cpp, ros-humble-std-srvs, ros-humble-swri-math-util, ros-humble-swri-transform-util, ros-humble-tf2, ros-humble-tf2-geometry-msgs, ros-humble-tf2-ros, ros-humble-ros-workspace
+Homepage: https://github.com/swri-robotics/mapviz
+Standards-Version: 3.9.2
+
+Package: ros-humble-mapviz
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, freeglut3-dev, libglew-dev, libqt5core5a, libqt5opengl5, libxi-dev, libxmu-dev, libyaml-cpp-dev, ros-humble-cv-bridge, ros-humble-geometry-msgs, ros-humble-image-transport, ros-humble-mapviz-interfaces, ros-humble-marti-common-msgs, ros-humble-pluginlib, ros-humble-rclcpp, ros-humble-rqt-gui, ros-humble-rqt-gui-cpp, ros-humble-std-srvs, ros-humble-swri-math-util, ros-humble-swri-transform-util, ros-humble-tf2, ros-humble-tf2-geometry-msgs, ros-humble-tf2-ros, ros-humble-ros-workspace
+Description: mapviz
