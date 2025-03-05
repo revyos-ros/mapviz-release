@@ -199,11 +199,11 @@ tracks:
     patches: null
     release_inc: '1'
     release_repo_url: null
-    release_tag: 2.4.4
+    release_tag: 2.4.5
     ros_distro: jazzy
     vcs_type: git
     vcs_uri: https://github.com/swri-robotics/mapviz.git
-    version: 2.4.4
+    version: 2.4.5
   kinetic:
     actions:
     - bloom-export-upstream :{vcs_local_uri} :{vcs_type} --tag :{release_tag} --display-uri
