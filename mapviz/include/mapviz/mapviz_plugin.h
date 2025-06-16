@@ -34,7 +34,7 @@
 #include <swri_transform_util/transform.h>
 #include <swri_transform_util/transform_manager.h>
 #include <rclcpp/rclcpp.hpp>
-#include <tf2/transform_datatypes.h>
+#include <tf2/transform_datatypes.hpp>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 
@@ -358,8 +358,32 @@ private:
 };
 typedef std::shared_ptr<MapvizPlugin> MapvizPluginPtr;
 
-// Implementation
+// Dealing with YAML frequently requires trimming whitespace from strings
+inline std::string TrimString(const std::string& str)
+{
+  auto begin = str.begin();
+  auto end = str.end();
 
+  // Trim leading whitespace
+  while (begin != end && std::isspace(*begin))
+  {
+    ++begin;
+  }
+
+  // Trim trailing whitespace
+  if (begin != end)
+  {
+    do
+    {
+      --end;
+    } while (std::isspace(*end));
+    ++end;
+  }
+
+  return std::string(begin, end);
+}
+
+// Implementation
 inline void MapvizPlugin::PrintErrorHelper(QLabel *status_label, const std::string &message,
                                             double throttle)
 {
