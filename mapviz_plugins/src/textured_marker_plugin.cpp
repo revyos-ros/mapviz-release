@@ -30,9 +30,6 @@
 #include <mapviz_plugins/textured_marker_plugin.h>
 #include <mapviz_plugins/topic_select.h>
 
-// Boost libraries
-#include <boost/algorithm/string.hpp>
-
 // QT libraries
 #include <QDialog>
 #include <QGLWidget>
@@ -158,19 +155,37 @@ void TexturedMarkerPlugin::connectCallback(const std::string& topic, const rmw_q
     topic_ = topic;
     qos_ = qos;
     if (!topic.empty()) {
-      marker_arr_sub_ =
-        node_->create_subscription<marti_visualization_msgs::msg::TexturedMarkerArray>(
-        topic_,
-        rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos),
-        std::bind(&TexturedMarkerPlugin::MarkerArrayCallback, this, std::placeholders::_1)
-        );
-      marker_sub_ = node_->create_subscription<marti_visualization_msgs::msg::TexturedMarker>(
-        topic_,
-        rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos),
-        std::bind(&TexturedMarkerPlugin::MarkerCallback, this, std::placeholders::_1)
-      );
-
-      RCLCPP_INFO(node_->get_logger(), "Subscribing to %s", topic_.c_str());
+      auto known_topics = node_->get_topic_names_and_types();
+      if (known_topics.count(topic_) > 0) {
+        rclcpp::QoS topic_qos(rclcpp::QoSInitialization::from_rmw(qos_));
+        std::string topic_type = known_topics[topic_][0];
+        if (topic_type == "marti_visualization_msgs/msg/TexturedMarkerArray") {
+          marker_arr_sub_ =
+            node_->create_subscription<marti_visualization_msgs::msg::TexturedMarkerArray>(
+            topic_,
+            rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos),
+            std::bind(&TexturedMarkerPlugin::MarkerArrayCallback, this, std::placeholders::_1)
+            );
+          RCLCPP_INFO(node_->get_logger(), "Subscribing to %s", topic_.c_str());
+        }
+        else if(topic_type == "marti_visualization_msgs/msg/TexturedMarker") {
+          marker_sub_ = node_->create_subscription<marti_visualization_msgs::msg::TexturedMarker>(
+            topic_,
+            rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos), qos),
+            std::bind(&TexturedMarkerPlugin::MarkerCallback, this, std::placeholders::_1)
+          );
+          RCLCPP_INFO(node_->get_logger(), "Subscribing to %s", topic_.c_str());
+        }
+        else {
+          RCLCPP_ERROR(node_->get_logger(),
+              "Unable to subscribe to topic %s (unsupported type %s).",
+              topic_.c_str(), topic_type.c_str());
+        }
+      }
+      else {
+        RCLCPP_ERROR(node_->get_logger(),
+            "Unable to subscribe to topic %s, (does not exist).", topic_.c_str());
+      }
     }
   }
 
@@ -517,7 +532,8 @@ void TexturedMarkerPlugin::LoadConfig(const YAML::Node & node, const std::string
   LoadQosConfig(node, qos_);
   if (node["topic"]) {
     std::string topic = node["topic"].as<std::string>();
-    ui_.topic->setText(boost::trim_copy(topic).c_str());
+    topic.erase(std::remove_if(topic.begin(), topic.end(), ::isspace), topic.end());
+    ui_.topic->setText(topic.c_str());
   }
 
   TopicEdited();
@@ -525,8 +541,9 @@ void TexturedMarkerPlugin::LoadConfig(const YAML::Node & node, const std::string
 
 void TexturedMarkerPlugin::SaveConfig(YAML::Emitter & emitter, const std::string & path)
 {
-  emitter << YAML::Key << "topic" << YAML::Value <<
-    boost::trim_copy(ui_.topic->text().toStdString());
+  std::string topic = ui_.topic->text().toStdString();
+    topic.erase(std::remove_if(topic.begin(), topic.end(), ::isspace), topic.end());
+  emitter << YAML::Key << "topic" << YAML::Value << topic;
 
   SaveQosConfig(emitter, qos_);
 }
