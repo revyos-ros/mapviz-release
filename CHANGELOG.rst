@@ -2,6 +2,59 @@
 Changelog for package tile_map
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.5.6 (2025-06-10)
+------------------
+
+2.5.5 (2025-06-03)
+------------------
+* Updating headers with new names (`#848 <https://github.com/swri-robotics/mapviz/issues/848>`_)
+* Contributors: David Anthony
+
+2.5.4 (2025-06-03)
+------------------
+
+2.5.3 (2025-06-02)
+------------------
+* Dependency cleanup (`#845 <https://github.com/swri-robotics/mapviz/issues/845>`_)
+* Contributors: DangitBen
+
+2.5.2 (2025-05-31)
+------------------
+
+2.5.1 (2025-05-30)
+------------------
+* Fix missing trailing slash in cmake include install (`#843 <https://github.com/swri-robotics/mapviz/issues/843>`_)
+* Contributors: DangitBen
+
+2.5.0 (2025-05-29)
+------------------
+* Correct CMake Export (`#842 <https://github.com/swri-robotics/mapviz/issues/842>`_)
+  * Removes Boost
+  * Removes deprecated ament macro
+  * General fixes to fix CMake exports and dependencies
+  ---------
+  Co-authored-by: Ben Andrew <benjamin.andrew@swri.org>
+* Contributors: David Anthony
+
+2.4.9 (2025-05-20)
+------------------
+* Adding Mapviz to tile map include directories (`#840 <https://github.com/swri-robotics/mapviz/issues/840>`_)
+* Contributors: David Anthony
+
+2.4.8 (2025-05-20)
+------------------
+* Fixing various dependencies (`#839 <https://github.com/swri-robotics/mapviz/issues/839>`_)
+* Contributors: David Anthony
+
+2.4.7 (2025-05-20)
+------------------
+* [kilted] Update deprecated call to ament_target_dependencies (`#838 <https://github.com/swri-robotics/mapviz/issues/838>`_)
+  * Removing deprecated ament calls while building.
+* Contributors: David V. Lu!!
+
+2.4.6 (2025-04-02)
+------------------
+
 2.4.5 (2025-01-20)
 ------------------
 
